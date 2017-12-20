@@ -2,7 +2,7 @@
 
 - name: install spdk
   become: true
-  sudo: true
+  hosts: all
   vars_files:
     - group_vars/common.yml
     - group_vars/pre_requisite.yml
