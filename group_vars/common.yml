@@ -1,0 +1,18 @@
+###########
+# GENERAL #
+###########
+
+
+remote_url: https://github.com/spdk/spdk.git
+
+ceph_dir: $HOME/ceph
+
+# when SPDK is installed independently， set enabled_install: spdk_alone
+# if not, set enabled_install: ceph_spdk
+enabled_install: spdk_alone
+
+# when enabled_install == "spdk_alone",set spdk_dir: $HOME/spdk.
+# when enabled_install == "ceph_spdk",set spdk_dir: $ceph_dir/spdk
+spdk_dir: $HOME/spdk
+
+

@@ -1,0 +1,10 @@
+---
+
+- name: install spdk
+  become: true
+  sudo: true
+  vars_files:
+    - group_vars/common.yml
+    - group_vars/pre_requisite.yml
+    - group_vars/install.yml
+

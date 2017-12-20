@@ -1,0 +1,5 @@
+---
+
+- name: install spdk_alone dependencies
+  script: "../pkgdep.sh"
+  sudo: true

@@ -1,0 +1,22 @@
+---
+- name: download spdk source code
+  git:
+    repo: "{{ remote_url }}"
+    dest: $HOME
+  when: enabled_install == "spdk_alone"
+
+- name: download spdk source code into ceph
+  git:
+    repo: "{{ remote_url }}"
+    dest: "{{ ceph_dir }}"
+  when: enabled_install == "ceph_spdk"
+
+- name: enter spdk_dir
+  command: cd {{ spdk_dir }}
+
+- name: import dpdk
+  command: git submodule update --init
+
+- name: deploy spdk
+  script: "../spdk_deploy.sh"
+  sudo: true
