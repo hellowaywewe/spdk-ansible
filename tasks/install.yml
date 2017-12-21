@@ -24,8 +24,8 @@
     chdir={{ spdk_dir }}
     ./configure --with-dpdk=./dpdk/x86_64-native-linuxapp-gcc
     make
-  when: system_version == 'Ubuntu' | system_version == 'Debian' |  \
-        system_version == 'Centos' | system_version == 'Fedora'
+  when: system_version == 'Ubuntu' or system_version == 'Debian' or  \
+        system_version == 'Centos' or system_version == 'Fedora'
 
   ### deploy spdk in FreeBSD
 - name: deploy the spdk
