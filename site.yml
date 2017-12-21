@@ -7,12 +7,6 @@
   vars_files:
     - group_vars/common.yml
   tasks:
-    - name: run pre_requisite.yml
-      include:
-          - tasks/pre_requisite.yml
-
-    - name: run install.yml
-      include:
-          - tasks/install.yml
-
+    - include_tasks: tasks/pre_requisite.yml
+    - include_tasks: tasks/install.yml
 
