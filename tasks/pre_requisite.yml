@@ -3,7 +3,7 @@
 ### In Ubuntu, Debian
 - name: Install the spdk dependency packages
   raw: sudo apt-get install -y gcc g++ make libcunit1-dev libaio-dev libssl-dev \
-		git astyle pep8 lcov clang uuid-dev
+       git astyle pep8 lcov clang uuid-dev
   when: system_version == 'Ubuntu' | system_version == 'Debian'
 
 - name: Install additional dependencies for NVMe over Fabrics
@@ -26,7 +26,7 @@
 
 - name: Install the spdk dependency packages in Centos, Fedora
   raw: sudo yum install -y gcc gcc-c++ make CUnit-devel libaio-devel openssl-devel \
-		git astyle-devel python-pep8 lcov python clang-analyzer libuuid-devel
+       git astyle-devel python-pep8 lcov python clang-analyzer libuuid-devel
   when: system_version == 'Centos' | system_version == 'Fedora'
 
 - name: Install additional dependencies for NVMe over Fabrics in ubuntu, Debian
@@ -44,7 +44,7 @@
 ### In FreeBSD
 - name: Install the spdk dependency packages
   raw: sudo pkg install gmake cunit openssl git devel/astyle bash devel/pep8 \
-		python misc/e2fsprogs-libuuid
+       python misc/e2fsprogs-libuuid
   when: system_version == 'FreeBSD'
 
 - name: Install additional dependencies for building docs

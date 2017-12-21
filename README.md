@@ -2,11 +2,12 @@
 ## Install ssh server
     sudo apt-get install openssh-server
 
-if you use root to run spdk-ansible, you should open the file of /etc/ssh/sshd_config and modify:
+    if you use root to run spdk-ansible, you should open the file of
+    /etc/ssh/sshd_config and modify:
     PermitRootLogin yes
     sudo /etc/init.d/ssh restart
 
-generate ssh-token:
+    generate ssh-token:
     ssh-keygen -t rsa
     ssh-copy-id -i ~/.ssh/id_rsa.pub <romte_ip(eg: username@hostName or username@hostIp)>
 
@@ -22,12 +23,13 @@ generate ssh-token:
 ##  Check if the hosts could be reached:
     ansible all -m ping
 
-##  git clone https://github.com/hellowaywewe/spdk-ansible.git
+##  Download spdk-ansible
+    git clone https://github.com/hellowaywewe/spdk-ansible.git
 
-## Configure common.yml according to required vars
-
-## Configure site.yml according to required tasks
+##  configure spdk-ansible
+    Configure common.yml according to required vars.
+    Configure site.yml according to required tasks.
 
 ## Run ansible playbook: (under spdk-ansible root directory)
-ansible-playbook site.yml  --extra-vars "ansible_sudo_pass=your_user_password"
+    ansible-playbook site.yml  --extra-vars "ansible_sudo_pass=your_user_password"
 
