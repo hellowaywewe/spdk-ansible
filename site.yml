@@ -1,10 +1,18 @@
 ---
 
 - name: install spdk
-  become: true
+  become: True
   hosts: all
+  gather_facts: False
   vars_files:
     - group_vars/common.yml
-    - group_vars/pre_requisite.yml
-    - group_vars/install.yml
+  tasks:
+    - name: run pre_requisite.yml
+      include:
+          - tasks/pre_requisite.yml
+
+    - name: run install.yml
+      include:
+          - tasks/install.yml
+
 

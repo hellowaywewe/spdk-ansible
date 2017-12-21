@@ -15,4 +15,5 @@ enabled_install: spdk_alone
 # when enabled_install == "ceph_spdk",set spdk_dir: $ceph_dir/spdk
 spdk_dir: $HOME/spdk
 
-
+#system_version include: Ubuntu, Debian, entos, Fedora, FreeBSD
+system_version: Ubuntu

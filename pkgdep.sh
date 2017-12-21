@@ -4,7 +4,6 @@ SYSTEM=`uname -s`
 
 if [ -s /etc/redhat-release ]; then
 	# Includes Fedora, CentOS
-	yum update
 	if [ -f /etc/centos-release ]; then
 		# Add EPEL repository for CUnit-devel
 		yum --enablerepo=extras install -y epel-release
@@ -19,7 +18,6 @@ if [ -s /etc/redhat-release ]; then
 	yum install -y doxygen mscgen
 elif [ -f /etc/debian_version ]; then
 	# Includes Ubuntu, Debian
-	apt-get update
 	apt-get install -y gcc g++ make libcunit1-dev libaio-dev libssl-dev \
 		git astyle pep8 lcov clang uuid-dev
 	# Additional dependencies for NVMe over Fabrics
@@ -29,7 +27,6 @@ elif [ -f /etc/debian_version ]; then
 	# Additional dependencies for building docs
 	apt-get install -y doxygen mscgen
 elif [ $SYSTEM = "FreeBSD" ] ; then
-    pkg upgrade
 	pkg install gmake cunit openssl git devel/astyle bash devel/pep8 \
 		python misc/e2fsprogs-libuuid
 	# Additional dependencies for building docs
