@@ -1,14 +1,14 @@
 ---
 - name: download spdk source code
-  git:
-    repo: "{{ remote_url }}"
-    dest: $HOME
+  shell:
+    chdir=$HOME
+    git clone "{{ remote_url }}"
   when: enabled_install == "spdk_alone"
 
 - name: download spdk source code into ceph
-  git:
-    repo: "{{ remote_url }}"
-    dest: "{{ ceph_dir }}"
+  shell:
+    chdir="{{ ceph_dir }}"
+    git clone "{{ remote_url }}"
   when: enabled_install == "ceph_spdk"
 
 - name: import dpdk
