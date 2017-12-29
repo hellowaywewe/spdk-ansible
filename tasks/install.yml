@@ -1,20 +1,20 @@
 ---
 - name: download spdk source code
-  shell: git clone "{{ remote_url }}"
-  args:
-    chdir: "{{ user_dir }}"
+  git:
+    repo: "{{ remote_url }}"
+    dest: "{{ user_dir }}"
   when: enabled_install == "spdk_alone"
 
 - name: download spdk source code into ceph
-  shell: git clone "{{ remote_url }}"
-  args:
-    chdir: "{{ ceph_dir }}"
+  git:
+    repo: "{{ remote_url }}"
+    dest: "{{ ceph_dir }}"
   when: enabled_install == "ceph_spdk"
 
 - name: Install the spdk dependency packages
-  shell: sudo ./pkgdep.sh
+  shell: sudo ./scripts/pkgdep.sh
   args:
-    chdir: "{{ spdk_dir ]}"/scripts
+    chdir: "{{ spdk_dir ]}"
 
 - name: Download dpdk
   shell: sudo git submodule update --init
@@ -25,7 +25,7 @@
 - name: Install the dpdk
   shell: make install T=x86_64-native-linuxapp-gcc DESTDIR=./
   args:
-    chdir: "{{ spdk_dir }}"/dpdk
+    chdir: "{{ spdk_dir }}"
   when:
     - (system_version == 'Ubuntu' or system_version == 'Debian') or (system_version == 'Centos' or system_version == 'Fedora')
 
@@ -40,8 +40,8 @@
   ### deploy spdk in FreeBSD
 - name: Install the dpdk
   shell: gmake install T=x86_64-native-linuxapp-gcc DESTDIR=./
-  args:
-    chdir: "{{ spdk_dir }}"/dpdk
+  raw:
+    chdir: "{{ spdk_dir }}/dpdk"
   when:
     - system_version == 'Free'
 
