@@ -14,7 +14,7 @@
 - name: Install the spdk dependency packages
   shell: sudo ./scripts/pkgdep.sh
   args:
-    chdir: "{{ spdk_dir ]}"
+    chdir: "{{ spdk_dir }}"
 
 - name: Download dpdk
   raw: cd {{ spdk_dir }} && sudo git submodule update --init
@@ -26,8 +26,8 @@
     - (system_version == 'Ubuntu' or system_version == 'Debian') or (system_version == 'Centos' or system_version == 'Fedora')
 
 
-  ### deploy spdk in FreeBSD
-- - name: deploy the spdk
-    raw: ((cd {{ spdk_dir }}/dpdk && gmake install T=x86_64-native-linuxapp-gcc DESTDIR=./) && (cd {{ spdk_dir }} && ./configure --with-dpdk=./dpdk/x86_64-native-linuxapp-gcc)) && (cd {{ spdk_dir }} && gmake)
-    when:
- -    - system_version == 'FreeBSD'
+### deploy spdk in FreeBSD
+- name: deploy the spdk
+  raw: ((cd {{ spdk_dir }}/dpdk && gmake install T=x86_64-native-linuxapp-gcc DESTDIR=./) && (cd {{ spdk_dir }} && ./configure --with-dpdk=./dpdk/x86_64-native-linuxapp-gcc)) && (cd {{ spdk_dir }} && gmake)
+  when:
+    - system_version == 'FreeBSD'
