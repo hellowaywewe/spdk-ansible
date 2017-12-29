@@ -1,25 +1,53 @@
 ---
 - name: download spdk source code
-  raw:
-    cd {{ user_dir }} && git clone "{{ remote_url }}"
+  shell: git clone "{{ remote_url }}"
+  args:
+    chdir: "{{ user_dir }}"
   when: enabled_install == "spdk_alone"
 
 - name: download spdk source code into ceph
-  raw:
-    cd {{ ceph_dir }} && git clone "{{ remote_url }}"
+  shell: git clone "{{ remote_url }}"
+  args:
+    chdir: "{{ ceph_dir }}"
   when: enabled_install == "ceph_spdk"
 
+- name: Install the spdk dependency packages
+  shell: sudo ./pkgdep.sh
+  args:
+    chdir: "{{ spdk_dir ]}"/scripts
+
 - name: Download dpdk
-  raw: cd {{ spdk_dir }} && sudo git submodule update --init
+  shell: sudo git submodule update --init
+  args:
+    chdir: "{{ spdk_dir }}"
 
 ### deploy spdk in Ubuntu, Debian, Centos, Fedora
-- name: deploy the spdk
-  raw: ((cd {{ spdk_dir }}/dpdk && make install T=x86_64-native-linuxapp-gcc DESTDIR=./) && (cd {{ spdk_dir }} && ./configure --with-dpdk=./dpdk/x86_64-native-linuxapp-gcc)) && (cd {{ spdk_dir }} && make)
+- name: Install the dpdk
+  shell: make install T=x86_64-native-linuxapp-gcc DESTDIR=./
+  args:
+    chdir: "{{ spdk_dir }}"/dpdk
   when:
     - (system_version == 'Ubuntu' or system_version == 'Debian') or (system_version == 'Centos' or system_version == 'Fedora')
 
-  ### deploy spdk in FreeBSD
 - name: deploy the spdk
-  raw: ((cd {{ spdk_dir }}/dpdk && gmake install T=x86_64-native-linuxapp-gcc DESTDIR=./) && (cd {{ spdk_dir }} && ./configure --with-dpdk=./dpdk/x86_64-native-linuxapp-gcc)) && (cd {{ spdk_dir }} && gmake)
+  shell: ./configure --with-dpdk=./dpdk/x86_64-native-linuxapp-gcc && make
+  args:
+    chdir: "{{ spdk_dir }}"
+  when:
+    - (system_version == 'Ubuntu' or system_version == 'Debian') or (system_version == 'Centos' or system_version == 'Fedora')
+
+
+  ### deploy spdk in FreeBSD
+- name: Install the dpdk
+  shell: gmake install T=x86_64-native-linuxapp-gcc DESTDIR=./
+  args:
+    chdir: "{{ spdk_dir }}"/dpdk
+  when:
+    - system_version == 'Free'
+
+- name: deploy the spdk
+  shell: ./configure --with-dpdk=./dpdk/x86_64-native-linuxapp-gcc && gmake
+  args:
+    chdir: "{{ spdk_dir }}"
   when:
     - system_version == 'Free'
