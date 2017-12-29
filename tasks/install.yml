@@ -1,14 +1,14 @@
 ---
 - name: download spdk source code
-  git:
-    repo: "{{ remote_url }}"
-    dest: "{{ user_dir }}"
+  shell: git clone "{{ remote_url }}"
+  args:
+    chdir: "{{ user_dir ]}"
   when: enabled_install == "spdk_alone"
 
 - name: download spdk source code into ceph
-  git:
-    repo: "{{ remote_url }}"
-    dest: "{{ ceph_dir }}"
+  shell: git clone "{{ remote_url }}"
+  args:
+    chdir: "{{ ceph_dir ]}"
   when: enabled_install == "ceph_spdk"
 
 - name: Install the spdk dependency packages
@@ -40,7 +40,7 @@
   ### deploy spdk in FreeBSD
 - name: Install the dpdk
   shell: gmake install T=x86_64-native-linuxapp-gcc DESTDIR=./
-  raw:
+  args:
     chdir: "{{ spdk_dir }}/dpdk"
   when:
     - system_version == 'Free'
